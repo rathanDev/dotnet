@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using SignalRApp.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>SignalR Chat Client</title>
+    <script src="signalr.min.js"></script>
+</head>
+<body>
+<h2>SignalR Chat</h2>
+<input type="text" id="messageInput" placeholder="Type a message..." />
+<button onclick="sendMessage()">Send</button>
+<ul id="messagesList"></ul>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5222/chathub")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on("ReceiveMessage", message => {
+        const li = document.createElement("li");
+        li.textContent = message;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+    connection.start()
+        .then(() => console.log("Connected to SignalR hub"))
+        .catch(err => console.error("Connection failed:", err));
+
+    function sendMessage() {
+        const message = document.getElementById("messageInput").value;
+        connection.invoke("SendMessage", message)
+            .catch(err => console.error("Send failed:", err));
+    }
+</script>
+</body>
+</html>

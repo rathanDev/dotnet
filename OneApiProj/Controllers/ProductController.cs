@@ -32,7 +32,6 @@ namespace OneApiProj.Controllers
         {
             product.Id = products.Max(p => p.Id) + 1;
             products.Add(product);
-
             return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
         }
 

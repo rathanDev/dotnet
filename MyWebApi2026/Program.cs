@@ -1,6 +1,14 @@
+using MyWebApi2026.Repositories;
+using MyWebApi2026.Repositories.Interface;
+using MyWebApi2026.Services;
+using MyWebApi2026.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

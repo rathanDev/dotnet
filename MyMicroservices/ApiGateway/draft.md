@@ -1,4 +1,4 @@
-# -----
+﻿# -----
 
 > In the .NET 9 ecosystem, 
 	the primary technology used to build an API Gateway for microservices is YARP (Yet Another Reverse Proxy). 
@@ -25,10 +25,10 @@ dotnet sln add ApiGateway UserService ProductService
 
 # -----
 
-?? Love it � this is the **right moment** to move to microservices.
-Let�s do this **properly, but lean** (no overengineering).
+🔥 Love it — this is the **right moment** to move to microservices.
+Let’s do this **properly, but lean** (no overengineering).
 
-I�ll give you:
+I’ll give you:
 
 1. **Architecture**
 2. **Project structure**
@@ -37,74 +37,74 @@ I�ll give you:
 
 ---
 
-## ?? Target Architecture (simple & real-world)
+## 🧠 Target Architecture (simple & real-world)
 
 ```
 Client (Web / Mobile)
-        ?
-        ?
- ????????????????
- ? API GATEWAY  ?  (YARP)
- ????????????????
-        ?
- ????????????????????
- ?                  ?
- ?                  ?
+        │
+        ▼
+ ┌──────────────┐
+ │ API GATEWAY  │  (YARP)
+ └──────┬───────┘
+        │
+ ┌──────┴───────────┐
+ │                  │
+ ▼                  ▼
 User Service     Product Service
 (.NET 9 API)     (.NET 9 API)
 ```
 
 ---
 
-## ?? Responsibilities
+## 🧩 Responsibilities
 
-### ?? API Gateway
+### 🛣 API Gateway
 
-? Single entry point
-? JWT validation
-? Route to services
-? No business logic
+✔ Single entry point
+✔ JWT validation
+✔ Route to services
+✔ No business logic
 
-### ?? User Service
+### 👤 User Service
 
-? Auth (login/register)
-? Users, roles
-? Issues JWT
+✔ Auth (login/register)
+✔ Users, roles
+✔ Issues JWT
 
-### ?? Product Service
+### 📦 Product Service
 
-? Product CRUD
-? Requires valid JWT
-? No auth logic
+✔ Product CRUD
+✔ Requires valid JWT
+✔ No auth logic
 
 ---
 
-## ?? Tech Stack (clean choices)
+## 🛠 Tech Stack (clean choices)
 
 | Component     | Tech                              |
 | ------------- | --------------------------------- |
 | Gateway       | **YARP Reverse Proxy**            |
 | Services      | **ASP.NET Core Web API (.NET 9)** |
 | Auth          | **JWT**                           |
-| DB            | EF Core (InMemory ? later SQL)    |
+| DB            | EF Core (InMemory → later SQL)    |
 | Communication | HTTP                              |
 | Container     | Docker (later)                    |
 
 ---
 
-## ?? Solution Structure
+## 📁 Solution Structure
 
 ```
 MyMicroservices.sln
-?
-??? api-gateway
-?   ??? ApiGateway.csproj
-?
-??? user-service
-?   ??? UserService.csproj
-?
-??? product-service
-    ??? ProductService.csproj
+│
+├── api-gateway
+│   └── ApiGateway.csproj
+│
+├── user-service
+│   └── UserService.csproj
+│
+└── product-service
+    └── ProductService.csproj
 ```
 
 Create it like this:
@@ -121,7 +121,7 @@ dotnet sln add ApiGateway UserService ProductService
 
 ---
 
-## ?? 1?? API Gateway (YARP)
+## 🚪 1️⃣ API Gateway (YARP)
 
 ### Install
 
@@ -172,7 +172,7 @@ app.MapReverseProxy();
 
 ---
 
-## ?? 2?? User Service
+## 👤 2️⃣ User Service
 
 **Port:** `6001`
 
@@ -185,14 +185,14 @@ app.MapReverseProxy();
 ### Issues JWT
 
 ```text
-POST /auth/login ? JWT
+POST /auth/login → JWT
 ```
 
-JWT config same as you already built ?
+JWT config same as you already built ✅
 
 ---
 
-## ?? 3?? Product Service
+## 📦 3️⃣ Product Service
 
 **Port:** `6002`
 
@@ -211,54 +211,58 @@ public async Task<IActionResult> GetProducts()
 
 ---
 
-## ?? JWT Flow (important)
+## 🔐 JWT Flow (important)
 
 ```
 Client
-  ? POST /auth/login
-  ?
-User Service ? JWT
-  ?
-  ?
-Client ? API Gateway ? Product Service
+  │ POST /auth/login
+  ▼
+User Service → JWT
+  │
+  ▼
+Client → API Gateway → Product Service
           (Bearer token forwarded)
 ```
 
-?? Gateway **does not create JWT**, only validates (optional).
+📌 Gateway **does not create JWT**, only validates (optional).
 
 ---
 
-## ?? Golden Microservice Rules
+## ⚠️ Golden Microservice Rules
 
-? Each service has **its own DB**
-? No shared EF DbContext
-? Communicate via HTTP (or events later)
-? Gateway ? business logic
-? Fail fast, stateless
-
----
-
-## ?? Build Order (recommended)
-
-1?? User Service (Auth + JWT)
-2?? Product Service (Authorize)
-3?? API Gateway routing
-4?? Swagger per service
-5?? Docker Compose
-6?? Central logging
+✔ Each service has **its own DB**
+✔ No shared EF DbContext
+✔ Communicate via HTTP (or events later)
+✔ Gateway ≠ business logic
+✔ Fail fast, stateless
 
 ---
 
-## ?? You�re doing this right
+## 🔜 Build Order (recommended)
+
+1️⃣ User Service (Auth + JWT)
+2️⃣ Product Service (Authorize)
+3️⃣ API Gateway routing
+4️⃣ Swagger per service
+5️⃣ Docker Compose
+6️⃣ Central logging
+
+---
+
+## 🧠 You’re doing this right
 
 Given your background (Spring Boot, microservices, AWS, OCP), this maps **1:1** to real enterprise systems.
 
-Next step � **pick ONE**:
+Next step — **pick ONE**:
 
-* ?? Build **User Service fully**
-* ?? Secure **Product Service**
-* ?? Wire **API Gateway + JWT**
-* ?? Dockerize all three
+* 👉 Build **User Service fully**
+* 👉 Secure **Product Service**
+* 👉 Wire **API Gateway + JWT**
+* 👉 Dockerize all three
 
-Tell me which one and we�ll code it ??
+Tell me which one and we’ll code it 💪
+
+# ----- ----- ----- ----- ----- || ----- ----- ----- ----- -----
+2. Implement API validation in API Gateway using JWT tokens issued by User Service.
+
 

@@ -4,6 +4,12 @@ namespace MyWebApi2026.Repositories.Interface;
 
 public interface IUserRepository
 {
-    IEnumerable<User> GetAll();
-    User? GetById(int id);
+
+    Task<IEnumerable<User>> GetAllAsync();
+    // Task<IReadOnlyList<User>> GetAll();
+
+    Task<User?> GetByIdAsync(int id);
+
+    Task AddAsync(User user);
+
 }

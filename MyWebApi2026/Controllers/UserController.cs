@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyWebApi2026.Models;
+using MyWebApi2026.DTOs.Users;
 using MyWebApi2026.Services.Interfaces;
 
 namespace MyWebApi2026.Controllers;
@@ -23,7 +23,7 @@ public class UserController : ControllerBase
         return Ok(users);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public IActionResult GetUserById(int id)
     {
         var user = _userService.GetUserByIdAsync(id);
@@ -35,10 +35,10 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(User user)
+    public async Task<IActionResult> CreateUser(CreateUserRequest req)
     {
-        await _userService.CreateUserAsync(user);
-        return CreatedAtAction(nameof(GetUserById), new {id = user.Id}, user);
+        var userResponse = await _userService.CreateUserAsync(req);
+        return CreatedAtAction(nameof(GetUserById), new {id = userResponse.Id}, userResponse);
     }
 
 }

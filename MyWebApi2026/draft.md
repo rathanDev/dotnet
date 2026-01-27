@@ -21,8 +21,6 @@ create repositories
 https://localhost:7059/api/user
 https://localhost:7059/api/user/1
 
-
-
 Next upgrades (your call 👇)
 🔹 Replace in-memory repo with EF Core
 🔹 Add Unit Tests (xUnit + Moq)
@@ -48,11 +46,24 @@ System.AggregateException: 'Some services are not able to be constructed (Error 
 Add swagger 
 	   dotnet add package Swashbuckle.AspNetCore
    
+Next steps:
+	"Add DTOs"
+	"Add validation"
+	"Add global exception handling"
+	"Add integration tests"
+	"Switch DB by environment"
+	"Convert to minimal APIs"
 
 
 
 
+# -----
+# Keyboard shortcuts
 
+Edit.GoToAll
+Ctrl + ,
+
+# -----
 
 
 

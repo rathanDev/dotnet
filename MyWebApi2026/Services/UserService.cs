@@ -1,4 +1,5 @@
-﻿using MyWebApi2026.Models;
+﻿using MyWebApi2026.DTOs.Users;
+using MyWebApi2026.Models;
 using MyWebApi2026.Repositories.Interface;
 using MyWebApi2026.Services.Interfaces;
 
@@ -13,21 +14,44 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<User?> GetUserByIdAsync(int id)
+    public async Task<UserResponse?> GetUserByIdAsync(int id)
     {
         var user = await _userRepository.GetByIdAsync(id);
-        return user;
+        if (user == null)
+        {
+            return null;
+        }
+        var res = new UserResponse
+        {
+            Id = user.Id,
+            Name = user.Name
+        };
+        return res;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    public async Task<IEnumerable<UserResponse>> GetAllUsersAsync()
     {
         var users = await _userRepository.GetAllAsync();
-        return users;
+        var res = users.Select(u => new UserResponse
+        {
+            Id = u.Id,
+            Name = u.Name
+        }).ToList();
+        return res;
     }
 
-    public async Task CreateUserAsync(User user)
+    public async Task<UserResponse> CreateUserAsync(CreateUserRequest req)
     {
+        var user = new User
+        {
+            Name = req.Name
+        };
         await _userRepository.AddAsync(user);
+        return new UserResponse
+        {
+            Id = user.Id,
+            Name = user.Name
+        };
     }
 
 }

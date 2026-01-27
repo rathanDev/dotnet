@@ -1,14 +1,16 @@
-﻿using MyWebApi2026.Models;
+﻿using MyWebApi2026.DTOs.Users;
+using MyWebApi2026.Models;
 
 namespace MyWebApi2026.Services.Interfaces;
 
 public interface IUserService
 {
 
-    Task<IEnumerable<User>> GetAllUsersAsync();
+    Task<IEnumerable<UserResponse>> GetAllUsersAsync();
+    // Task<IReadOnlyList<User>>
     
-    Task<User?> GetUserByIdAsync(int id);
+    Task<UserResponse?> GetUserByIdAsync(int id);
 
-    Task CreateUserAsync(User user);
+    Task<UserResponse> CreateUserAsync(CreateUserRequest req);
 
 }

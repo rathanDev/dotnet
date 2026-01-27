@@ -1,10 +1,6 @@
-﻿using MyWebApi2026.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyWebApi2026.Services.Interfaces;
+using MyWebApi2026.DTOs;
 
 namespace MyWebApi2026.Controllers;
 
@@ -13,11 +9,11 @@ namespace MyWebApi2026.Controllers;
 public class AuthController : ControllerBase
 {
 
-    private readonly JwtOptions _jwt;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(IOptions<JwtOptions> jwt)
+    public AuthController(ITokenService tokenService)
     {
-        _jwt = jwt.Value;
+        _tokenService = tokenService;
     }
 
     [HttpPost("login")]
@@ -28,33 +24,12 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.Name, req.Username),
-            new Claim(ClaimTypes.Role, "Admin"),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_jwt.Key));
-
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: _jwt.Issuer,
-            audience: _jwt.Audience,
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_jwt.ExpiryMinutes),
-            signingCredentials: creds
-        );
+        var tokenStr = _tokenService.GenerateToken(req);
 
         return Ok(new
         {
-            token = new JwtSecurityTokenHandler().WriteToken(token)
+            token = tokenStr
         });
-
     }
 
 }
-
-public record LoginRequest(string Username, string Password);

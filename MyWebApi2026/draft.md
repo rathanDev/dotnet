@@ -55,6 +55,11 @@ Next steps:
 	"Convert to minimal APIs"
 
 
+# JWT 
+
+  dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 8.0.5
+  
+
 
 
 # -----

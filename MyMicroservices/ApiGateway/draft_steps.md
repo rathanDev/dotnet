@@ -28,3 +28,27 @@ dotnet add package Microsoft.EntityFrameworkCore --version 9.0.0
 
 dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 9.0.0
 dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 7.0.18
+
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.0
+
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.0.0
+
+
+
+
+# EntityFramework Tools
+dotnet tool install --global dotnet-ef
+
+		dotnet tool restore
+		dotnet ef --version
+
+dotnet-ef tool restore
+dotnet-ef migrations add InitialCreate
+dotnet-ef database update
+
+
+
+
+
+dotnet add package Dapper
+dotnet add package Microsoft.Data.Sqlite

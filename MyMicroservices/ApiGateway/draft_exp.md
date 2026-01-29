@@ -942,3 +942,196 @@ Do you want me to do that?
 
 
 1.ThrowNullabilityErrorException
+
+
+User Dapper - it's an auto mapper 
+
+# ------------------
+# Docker compose 
+
+Think of **Docker Compose** as a **remote control for multiple Docker containers** 🎮🐳
+
+Instead of starting containers one by one with long `docker run` commands, you **describe everything once** in a file and start it all with **one command**.
+
+---
+
+## 🧠 Simple definition
+
+**Docker Compose** lets you:
+
+* Define **multiple containers**
+* Configure **networking, ports, volumes, env vars**
+* Start/stop everything together
+
+…using a single file: **`docker-compose.yml`**
+
+---
+
+## 🤔 Why not just `docker run`?
+
+Compare this 👇
+
+### ❌ Without Docker Compose
+
+```bash
+docker run -d -p 1433:1433 -e SA_PASSWORD=... mssql
+docker run -d -p 8080:8080 my-api
+docker run -d redis
+```
+
+Hard to:
+
+* Remember commands
+* Keep configs in sync
+* Start/stop as a group
+
+---
+
+### ✅ With Docker Compose
+
+```bash
+docker compose up -d
+```
+
+Boom 💥
+Your **DB + API + Redis** all start together.
+
+---
+
+## 📄 What is docker-compose.yml?
+
+It’s a **declarative config file** that says:
+
+> “Here are my services, this is how they should run.”
+
+Example:
+
+```yaml
+services:
+  api:
+    image: userservice
+    ports:
+      - "8080:8080"
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "YourStrong@Password1"
+```
+
+---
+
+## 🔑 Key Concepts (very important)
+
+### 1️⃣ Service
+
+A **service = one container definition**
+
+```yaml
+services:
+  mssql:
+    image: mssql
+```
+
+---
+
+### 2️⃣ Network (automatic 🎉)
+
+* All services can talk to each other
+* Use **service name as hostname**
+
+```text
+Server=mssql,1433   ✅
+Server=localhost ❌ (inside containers)
+```
+
+---
+
+### 3️⃣ Volumes (data persistence)
+
+Keeps data even if container restarts:
+
+```yaml
+volumes:
+  - mssql_data:/var/opt/mssql
+```
+
+---
+
+### 4️⃣ Environment Variables
+
+For secrets and configs:
+
+```yaml
+environment:
+  SA_PASSWORD: "..."
+```
+
+---
+
+## 🛠 Common Docker Compose Commands
+
+```bash
+docker compose up        # start services
+docker compose up -d     # start in background
+docker compose down      # stop + remove containers
+docker compose ps        # list running services
+docker compose logs      # view logs
+```
+
+---
+
+## 🧩 How this fits your .NET work (real-life)
+
+For a **UserService** you’ll often have:
+
+* ASP.NET API
+* SQL Server
+* Redis
+* Kafka / RabbitMQ
+
+Compose lets you run **the whole system locally** — just like prod.
+
+---
+
+## 🧠 When SHOULD you use Docker Compose?
+
+✅ Local development
+✅ Integration testing
+✅ Microservices
+✅ Reproducible environments
+
+🚫 Large-scale production (use Kubernetes instead — which you already know 😉)
+
+---
+
+## One-liner summary
+
+> **Docker Compose = “Start my whole app stack with one command.”**
+
+If you want next, I can:
+
+* draw a **mental model diagram**
+* show **.NET API + SQL in one compose file**
+* compare **Docker Compose vs Kubernetes**
+
+Your call 🚀
+
+
+# -----------------------------------------------------------
+
+
+
+# -----------------------------------------------------------
+
+
+
+
+# -----------------------------------------------------------
+
+# ShortcutKeys
+Ctrl + ,      -> Find class
+Ctrl + F12    -> Go to Definition
+
+
+

@@ -15,11 +15,11 @@ public class ProductServiceImpl : IProductService
         _productRepository = productRepository;
     }
 
-    public async Task<int> CreateProductAsync(CreateProductRequest req)
+    public async Task<ProductDto> CreateProductAsync(CreateProductRequest req)
     {
         var product = new Product(req.Name, req.Description, req.Price);
         await _productRepository.AddAsync(product);
-        return product.Id;
+        return ProductMapper.ToDto(product);
     }
 
     public Task<ProductDto?> GetProductByNameAsync(string name)

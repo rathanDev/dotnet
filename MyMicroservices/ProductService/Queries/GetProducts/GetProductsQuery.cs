@@ -1,4 +1,7 @@
-﻿namespace ProductService.Queries.GetProducts;
+﻿using MediatR;
+using ProductService.DTOs;
 
-public record GetProductsQuery();
+namespace ProductService.Queries.GetProducts;
+
+public record GetProductsQuery() : IRequest<List<ProductDto>>;
 

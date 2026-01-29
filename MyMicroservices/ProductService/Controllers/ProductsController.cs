@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using ProductService.Commands.CreateProducts;
 using ProductService.Queries.GetProducts;
 
@@ -8,27 +9,25 @@ namespace ProductService.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly CreateProductHandler _createProductHandler;
-    private readonly GetProductsHandler _getProductsHandler;
+    private readonly IMediator _mediator;
 
-    public ProductsController(CreateProductHandler createProductHandler, GetProductsHandler getProductsHandler)
+    public ProductsController(IMediator mediator)
     {
-        _createProductHandler = createProductHandler;
-        _getProductsHandler = getProductsHandler;
+        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var products = await _getProductsHandler.HandleAsync(new GetProductsQuery());
+        var products = await _mediator.Send(new GetProductsQuery());
         return Ok(products);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
     {
-        var product = await _createProductHandler.HandleAsync(command);
-        return Ok(product);
+        var product = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetAll), new {id = product.Id}, product);
     }
 
 }

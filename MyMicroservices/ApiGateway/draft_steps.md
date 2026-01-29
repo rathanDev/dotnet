@@ -52,7 +52,7 @@ dotnet-ef database update
 
 
 
-# CQRS - MediatR
+# CQRS - MediatR	-	Controller is now thin, which is exactly what CQRS wants.
 dotnet add package MediatR
 dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 

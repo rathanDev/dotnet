@@ -1,9 +1,10 @@
-﻿using ProductService.DTOs;
+﻿using MediatR;
+using ProductService.DTOs;
 using ProductService.Services.Interfaces;
 
 namespace ProductService.Commands.CreateProducts;
 
-public class CreateProductHandler
+public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductDto>
 {
 
     private readonly IProductService _productService;
@@ -13,15 +14,15 @@ public class CreateProductHandler
         _productService = productService;
     }
 
-    public async Task<int> HandleAsync(CreateProductCommand command)
+    public async Task<ProductDto> Handle(CreateProductCommand command, CancellationToken token)
     {
         var req = new CreateProductRequest { 
             Name = command.Name, 
             Description = command.Description, 
             Price = command.Price 
         };
-        var id = await _productService.CreateProductAsync(req);
-        return id;
+        var product = await _productService.CreateProductAsync(req);
+        return product;
     }
 
 }

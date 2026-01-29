@@ -1279,6 +1279,191 @@ If you want, I can also explain:
 
 
 # -----------------------------------------------------------
+# CQRS - MediatR 
+
+# -----
+
+
+# -----
+
+do I need to have separate Handlers for every action? such as GetProductHandler GetProductsByName handler?
+
+Short answer: **yes — but with nuance** 🙂
+Long answer (the one seniors give): **you need separate handlers per *use-case*, not per CRUD obsession**.
+
+Let’s make this crystal clear.
+
+---
+
+## ✅ CQRS Rule of Thumb
+
+> **One handler per command or query.**
+
+That means:
+
+* `GetProducts` → **one handler**
+* `GetProductByName` → **one handler**
+* `CreateProduct` → **one handler**
+
+So yes:
+
+* `GetProductsHandler`
+* `GetProductByNameHandler`
+
+…are **expected and correct**.
+
+---
+
+## ❌ What CQRS is NOT
+
+CQRS is **not**:
+
+* one giant `ProductHandler`
+* one handler with `if (byName) else if (byId)`
+* “reuse handler to reduce files”
+
+That’s **anti-CQRS** and makes code harder to reason about.
+
+---
+
+## 🧠 Why separate handlers actually HELP
+
+### 1️⃣ Handlers represent **business use-cases**
+
+Each handler answers **one question** or performs **one intent**:
+
+| Handler                   | Intent                           |
+| ------------------------- | -------------------------------- |
+| `GetProductsHandler`      | “Give me all products”           |
+| `GetProductByNameHandler` | “Give me product with this name” |
+| `CreateProductHandler`    | “Create a product”               |
+
+This is *semantic clarity* — not boilerplate.
+
+---
+
+### 2️⃣ Independent evolution (this matters later)
+
+Tomorrow:
+
+* `GetProducts` needs **pagination + caching**
+* `GetProductByName` needs **case-insensitive search**
+* `GetProductById` needs **authorization**
+
+Separate handlers mean:
+
+* no breaking changes
+* no giant `switch`
+* no hidden side effects
+
+---
+
+### 3️⃣ Pipeline behaviors work better
+
+With MediatR you’ll soon add:
+
+* logging
+* validation
+* metrics
+* retries
+
+Each handler becomes a **pipeline node**.
+
+Example:
+
+* Log only `CreateProductCommand`
+* Cache only `GetProductsQuery`
+
+Impossible if everything is mashed together.
+
+---
+
+## ⚠️ When people OVERDO CQRS
+
+Bad example 👇
+
+```text
+GetProductByNameHandler
+GetProductByIdHandler
+GetProductBySkuHandler
+GetProductByBarcodeHandler
+```
+
+👎 This is **over-fragmentation**.
+
+### Better approach:
+
+Group by **use-case**, not query shape.
+
+Example:
+
+* `SearchProductsQuery`
+
+  * name
+  * sku
+  * filters
+  * paging
+
+→ **one handler**, richer query object.
+
+---
+
+## ✅ Recommended Pattern (what you’re already doing)
+
+✔ One handler per **command/query**
+✔ Queries return DTOs
+✔ Commands return result or void
+✔ Business logic in services
+✔ EF in repositories
+
+You’re doing it right.
+
+---
+
+## 🧩 Visual Summary
+
+```
+Controller
+   ↓
+MediatR
+   ↓
+[ Query / Command ]
+   ↓
+[ Handler ]  ← ONE PER USE-CASE
+   ↓
+Service
+   ↓
+Repository
+   ↓
+DB
+```
+
+---
+
+## 🎯 Final Answer
+
+> **Yes**, you should have separate handlers for:
+>
+> * `GetProducts`
+> * `GetProductByName`
+> * `CreateProduct`
+
+But:
+
+* don’t explode handlers for tiny variations
+* group when the *business intent* is the same
+
+---
+
+If you want, next I can:
+
+* show **when to merge queries**
+* add **SearchProductsQuery**
+* add **caching on read side**
+* explain **CQRS vs Clean Architecture boundary**
+
+Just say the word 👌
+
 
 
 

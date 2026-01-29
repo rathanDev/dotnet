@@ -1,3 +1,6 @@
-﻿namespace ProductService.Commands.CreateProducts;
+﻿using MediatR;
+using ProductService.DTOs;
 
-public record CreateProductCommand(string Name, string Description, decimal Price);
+namespace ProductService.Commands.CreateProducts;
+
+public record CreateProductCommand(string Name, string Description, decimal Price) : IRequest<ProductDto>;

@@ -8,5 +8,5 @@ public interface IProductService
 
     Task<ProductDto?> GetProductByNameAsync(string name);
 
-    Task<int> CreateProductAsync(CreateProductRequest req);
+    Task<ProductDto> CreateProductAsync(CreateProductRequest req);
 }

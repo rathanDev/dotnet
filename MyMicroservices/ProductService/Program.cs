@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductService.Commands.CreateProducts;
-using ProductService.Commands.GetProducts;
 using ProductService.Data;
+using ProductService.Queries.GetProducts;
 using ProductService.Repositories;
 using ProductService.Repositories.Interfaces;
 using ProductService.Services;

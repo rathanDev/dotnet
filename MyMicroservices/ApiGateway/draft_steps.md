@@ -52,7 +52,15 @@ dotnet-ef database update
 
 
 
+# CQRS - MediatR
+dotnet add package MediatR
+dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
+
+
+
 
 
 dotnet add package Dapper
 dotnet add package Microsoft.Data.Sqlite
+
+

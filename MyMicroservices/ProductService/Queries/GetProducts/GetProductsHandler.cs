@@ -1,7 +1,7 @@
 ﻿using ProductService.DTOs;
 using ProductService.Services.Interfaces;
 
-namespace ProductService.Commands.GetProducts;
+namespace ProductService.Queries.GetProducts;
 
 public class GetProductsHandler
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductService.Commands.CreateProducts;
-using ProductService.Commands.GetProducts;
+using ProductService.Queries.GetProducts;
 
 namespace ProductService.Controllers;
 

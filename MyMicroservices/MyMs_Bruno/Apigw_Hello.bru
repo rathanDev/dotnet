@@ -1,0 +1,15 @@
+meta {
+  name: Apigw_Hello
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:5000/api/hello
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

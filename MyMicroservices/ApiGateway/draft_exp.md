@@ -1119,7 +1119,163 @@ Your call 🚀
 
 
 # -----------------------------------------------------------
+# Extends & Implements
 
+Ah yes — the classic **extends vs implements** question, .NET edition 😄
+Short version: **C# doesn’t have `extends` or `implements` keywords at all**… but the concepts *do* exist.
+
+---
+
+## The C# equivalent
+
+In **C# / .NET Core**, you use **one keyword** for both:
+
+```csharp
+:
+```
+
+That colon (`:`) means:
+
+* **extend a class**
+* **implement one or more interfaces**
+
+---
+
+## Extends (Inheritance) — class → class
+
+**Conceptually = `extends` in Java**
+
+```csharp
+class Animal
+{
+    public void Eat() { }
+}
+
+class Dog : Animal
+{
+}
+```
+
+### Rules
+
+* A class can **extend only one class**
+* You inherit implementation + behavior
+* Used for **is-a** relationships
+
+✅ `Dog` *is an* `Animal`
+
+---
+
+## Implements — class → interface
+
+**Conceptually = `implements` in Java**
+
+```csharp
+interface IFlyable
+{
+    void Fly();
+}
+
+class Bird : IFlyable
+{
+    public void Fly()
+    {
+        Console.WriteLine("Flying...");
+    }
+}
+```
+
+### Rules
+
+* A class can implement **multiple interfaces**
+* Interfaces define **contracts**, not behavior (mostly)
+* Used for **capability-based design**
+
+✅ `Bird` *can fly*
+
+---
+
+## Both together (very common in .NET)
+
+```csharp
+class OrderService : BaseService, IOrderService, IDisposable
+{
+    public void Dispose() { }
+}
+```
+
+### What this means
+
+* `BaseService` → **extended**
+* `IOrderService`, `IDisposable` → **implemented**
+
+📌 **Rule:**
+
+* **First** → base class
+* **Then** → interfaces (comma-separated)
+
+---
+
+## Why C# chose this design
+
+Unlike Java, C#:
+
+* Avoids extra keywords
+* Uses **structure + intent** to infer meaning
+* Keeps syntax compact
+
+Once you know the rule, it’s actually cleaner.
+
+---
+
+## When to use what (real-world guidance)
+
+### Prefer **interfaces** when:
+
+* You want loose coupling
+* You’re designing APIs / microservices
+* You expect multiple implementations
+* You’re doing dependency injection
+
+```csharp
+public interface IPaymentService { }
+```
+
+### Use **base classes** when:
+
+* You want shared behavior
+* You control the inheritance hierarchy
+* You need protected fields or logic
+
+```csharp
+public abstract class PaymentServiceBase { }
+```
+
+---
+
+## Quick comparison (Java vs C#)
+
+| Concept              | Java         | C#  |
+| -------------------- | ------------ | --- |
+| Extend class         | `extends`    | `:` |
+| Implement interface  | `implements` | `:` |
+| Multiple inheritance | ❌            | ❌   |
+| Multiple interfaces  | ✅            | ✅   |
+
+---
+
+## TL;DR
+
+* **C# has no `extends` or `implements` keywords**
+* `:` does **both**
+* One base class max, many interfaces
+* Base class first, interfaces after
+
+If you want, I can also explain:
+
+* `abstract class vs interface`
+* How this impacts **DI in ASP.NET Core**
+* Why `.NET devs prefer interfaces even more than Java devs 😉
 
 
 # -----------------------------------------------------------

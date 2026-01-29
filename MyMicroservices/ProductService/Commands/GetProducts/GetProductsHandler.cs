@@ -1,23 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProductService.Data;
-using ProductService.DTOs;
+﻿using ProductService.DTOs;
+using ProductService.Services.Interfaces;
 
 namespace ProductService.Commands.GetProducts;
 
 public class GetProductsHandler
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly IProductService _productService;
 
-    public GetProductsHandler(AppDbContext appDbContext)
+    public GetProductsHandler(IProductService productService)
     {
-        _appDbContext = appDbContext;
+        _productService = productService;
     }
 
     public async Task<List<ProductDto>> HandleAsync(GetProductsQuery query)
     {
-        var products = await _appDbContext.Products.ToListAsync();
-        var productDtos = products.Select(p => new ProductDto(p.Id, p.Name, p.Description, p.Price)).ToList();
-        return productDtos;
+        return await _productService.GetProductsAsync();
     }
 
 }

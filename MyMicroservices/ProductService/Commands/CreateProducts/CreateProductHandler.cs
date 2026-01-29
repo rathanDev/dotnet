@@ -1,24 +1,27 @@
-﻿using ProductService.Data;
-using ProductService.Models;
+﻿using ProductService.DTOs;
+using ProductService.Services.Interfaces;
 
 namespace ProductService.Commands.CreateProducts;
 
 public class CreateProductHandler
 {
 
-    private readonly AppDbContext _appDbContext;
+    private readonly IProductService _productService;
 
-    public CreateProductHandler(AppDbContext appDbContext)
+    public CreateProductHandler(IProductService productService)
     {
-        _appDbContext = appDbContext;
+        _productService = productService;
     }
 
     public async Task<int> HandleAsync(CreateProductCommand command)
     {
-        var product = new Product( command.Name, command.Description, command.Price);
-        _appDbContext.Products.Add(product);
-        await _appDbContext.SaveChangesAsync();
-        return product.Id;
+        var req = new CreateProductRequest { 
+            Name = command.Name, 
+            Description = command.Description, 
+            Price = command.Price 
+        };
+        var id = await _productService.CreateProductAsync(req);
+        return id;
     }
 
 }

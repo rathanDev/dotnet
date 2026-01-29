@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using ProductService.Commands.CreateProducts;
 using ProductService.Commands.GetProducts;
 using ProductService.Data;
+using ProductService.Repositories;
+using ProductService.Repositories.Interfaces;
 using ProductService.Services;
 using ProductService.Services.Interfaces;
 
@@ -14,6 +16,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<CreateProductHandler>();
 builder.Services.AddScoped<GetProductsHandler>();
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductServiceImpl>();
 
 builder.Services.AddControllers();

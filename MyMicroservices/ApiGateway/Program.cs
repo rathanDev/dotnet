@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Yarp.ReverseProxy;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
+
 builder.Services.AddOpenApi();
 
 
@@ -30,16 +31,22 @@ builder.Services
         };
     });
 
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    // Default policy for protected routes
+    options.AddPolicy("RequireAuthenticatedPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    });
+});
+
 
 
 // YARP 
 builder.Services
     .AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
-
-
-builder.Services.AddControllers();
 
 
 var app = builder.Build();
@@ -52,12 +59,14 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers();   // Local Gateway controllers
 
-app.MapReverseProxy();
+app.MapReverseProxy();  // Reverse proxy routes
 
 
 app.Run();

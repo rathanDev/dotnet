@@ -1,0 +1,16 @@
+meta {
+  name: ProductSvc GetProds via ApiGw
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:5000/products/api/products
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

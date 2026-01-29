@@ -33,6 +33,10 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 9.0.0
 
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 9.0.0
 
+# Docker 
+cd DockerStuff/
+docker ps 
+docker compose up -d 
 
 
 

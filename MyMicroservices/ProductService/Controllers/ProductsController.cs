@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductService.Commands.CreateProducts;
+using ProductService.Commands.GetProducts;
 
 namespace ProductService.Controllers;
 
@@ -6,16 +8,27 @@ namespace ProductService.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult GetProducts()
+    private readonly CreateProductHandler _createProductHandler;
+    private readonly GetProductsHandler _getProductsHandler;
+
+    public ProductsController(CreateProductHandler createProductHandler, GetProductsHandler getProductsHandler)
     {
-        var products = new[]
-        {
-            new { Id = 1, Name = "Product A", Price = 10.0 },
-            new { Id = 2, Name = "Product B", Price = 20.0 },
-            new { Id = 3, Name = "Product C", Price = 30.0 }
-        };
+        _createProductHandler = createProductHandler;
+        _getProductsHandler = getProductsHandler;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var products = await _getProductsHandler.HandleAsync(new GetProductsQuery());
         return Ok(products);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
+    {
+        var product = await _createProductHandler.HandleAsync(command);
+        return Ok(product);
     }
 
 }

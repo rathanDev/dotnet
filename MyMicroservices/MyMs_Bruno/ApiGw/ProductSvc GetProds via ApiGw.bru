@@ -1,0 +1,20 @@
+meta {
+  name: ProductSvc GetProds via ApiGw
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:5000/products/api/products
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImp0aSI6ImRkOGEyZjBkLWUzZjEtNGEzMC1hMjYzLWE5Y2VmNDM0ZmY1ZCIsImV4cCI6MTc2OTY1ODQyMSwiaXNzIjoiTXlDb21wYW55LkF1dGgiLCJhdWQiOiJNeUNvbXBhbnkuQXBpIn0.Z1kxFz55DQN8xDsl86orMW1QZri_dDleudiRBcd .1K9bPk
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

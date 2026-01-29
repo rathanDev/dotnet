@@ -1,0 +1,16 @@
+meta {
+  name: ProductSvc GetProds dir
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:6010/api/products
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

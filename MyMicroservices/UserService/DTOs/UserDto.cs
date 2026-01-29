@@ -1,10 +1,10 @@
-﻿namespace UserService.Models;
+﻿namespace UserService.DTOs;
 
-public class User
+public class UserDto
 {
+
     public int Id { get; set; }
     public string Username { get; set; }
-    public string PasswordHash { get; set; }
     public string Role { get; set; }
 
 }

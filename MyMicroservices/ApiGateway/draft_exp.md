@@ -1,7 +1,11 @@
 ﻿build dotnet core 9 microservice; apiGw, userService; productService
-userService has Login api to create jwt
+userService issues Jwt token upon successful login
 apiGw does jwt validation and routing to userService and productService
 productService has GetProducts api 
+
+UserService has in memory db for users
+
+Mediatr for cqrs in userService and productService
 
 # ---
 
@@ -846,3 +850,95 @@ If you want:
 * **VS / VS Code launch profiles**
 
 Tell me what you’re using and I’ll tailor it 👌
+
+
+
+
+
+
+
+
+
+
+
+
+# EntityFramework 
+
+Ah, this is an important clarification — and it’s great you’re asking. Let’s break it down carefully.
+
+---
+
+## 1️⃣ EF Core is **database-agnostic**
+
+`Microsoft.EntityFrameworkCore` is the **core library** for Entity Framework. It provides:
+
+* DbContext
+* LINQ queries
+* Migrations
+* Change tracking
+
+…but **it does not include any specific database provider**.
+
+---
+
+## 2️⃣ SQL Server provider is separate
+
+If you want to connect EF Core to **SQL Server**, you need a **provider library**:
+
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+```
+
+* This adds **SQL Server-specific implementation** of EF Core
+* Enables EF Core to **translate LINQ queries into T-SQL**
+* Required to connect to a SQL Server database (`DbContextOptions.UseSqlServer(...)`)
+
+---
+
+### Example in `Program.cs`:
+
+```csharp
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+```
+
+Without the **SqlServer provider**, `UseSqlServer()` does **not exist**, and EF Core can’t talk to SQL Server.
+
+---
+
+## 3️⃣ Other providers
+
+EF Core has **different packages for different databases**:
+
+| Database   | EF Core Provider                        |
+| ---------- | --------------------------------------- |
+| SQL Server | Microsoft.EntityFrameworkCore.SqlServer |
+| SQLite     | Microsoft.EntityFrameworkCore.Sqlite    |
+| PostgreSQL | Npgsql.EntityFrameworkCore.PostgreSQL   |
+| MySQL      | Pomelo.EntityFrameworkCore.MySql        |
+
+* Choose the one that matches your database
+* The core EF library stays the same (`Microsoft.EntityFrameworkCore`)
+
+---
+
+### ✅ TL;DR
+
+* `Microsoft.EntityFrameworkCore` → EF Core core functionality
+* `Microsoft.EntityFrameworkCore.SqlServer` → connects EF Core to **SQL Server**
+
+> Think of it as: Core EF = “engine”, SqlServer = “fuel adapter” to talk to a specific DB.
+
+---
+
+If you want, I can show a **minimal working UserService.csproj for .NET 9** that has **EF Core 7 + SqlServer provider + JWT setup** ready to run. It will eliminate all version/package confusion.
+
+Do you want me to do that?
+
+
+
+
+
+
+1.ThrowNullabilityErrorException

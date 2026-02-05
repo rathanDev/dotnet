@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService", "ProductService\ProductService.csproj", "{5E922DC3-3DFA-4367-9840-9E1406B74696}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerService", "SchedulerService\SchedulerService.csproj", "{0220AE9A-8AE5-495E-94C6-6BA822F59580}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{5E922DC3-3DFA-4367-9840-9E1406B74696}.Release|x64.Build.0 = Release|Any CPU
 		{5E922DC3-3DFA-4367-9840-9E1406B74696}.Release|x86.ActiveCfg = Release|Any CPU
 		{5E922DC3-3DFA-4367-9840-9E1406B74696}.Release|x86.Build.0 = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|x64.Build.0 = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Debug|x86.Build.0 = Debug|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|x64.ActiveCfg = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|x64.Build.0 = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|x86.ActiveCfg = Release|Any CPU
+		{0220AE9A-8AE5-495E-94C6-6BA822F59580}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

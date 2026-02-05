@@ -56,11 +56,21 @@ dotnet-ef database update
 dotnet add package MediatR
 dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 
-
-
-
+# Dapper - Lightweight ORM
+dotnet add package Dapper
 
 dotnet add package Dapper
 dotnet add package Microsoft.Data.Sqlite
 
+# ----- ----------------------------
 
+dotnet new webapi -n SchedulerService
+cd SchedulerService 
+
+dotnet add package Hangfire 
+dotnet add package Hangfire.SqlServer 
+dotnet add package Serilog.AspNetCore
+
+dotnet sln add SchedulerService/SchedulerService.csproj
+
+# ----- ----------------------------

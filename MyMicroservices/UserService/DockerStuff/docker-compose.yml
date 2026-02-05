@@ -12,6 +12,7 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql
     restart: unless-stopped
+    mem_limit: 2g
 
 volumes:
   mssql_data:

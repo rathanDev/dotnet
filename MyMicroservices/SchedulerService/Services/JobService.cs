@@ -24,6 +24,7 @@ public class JobService : IJobService
         catch (Exception ex)
         {
             _log.LogError(ex, "Error occurred while executing monthly trigger job for period {Period}", period);
+            throw;
         }
         //await Task.Delay(1000);
     }

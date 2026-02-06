@@ -2,6 +2,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using SchedulerService.Scheduler;
 using SchedulerService.Schedulers;
+using SchedulerService.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,7 +46,7 @@ builder.Services.AddHangfireServer(options =>
 
 builder.Services.AddSingleton<IRecurringJobRegistrar, RecurringJobRegistrar>();
 
-
+builder.Services.AddScoped<IJobService, JobService>();
 
 var app = builder.Build();
 

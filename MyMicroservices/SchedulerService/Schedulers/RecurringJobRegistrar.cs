@@ -24,7 +24,7 @@ public class RecurringJobRegistrar : IRecurringJobRegistrar
         RecurringJob.AddOrUpdate<MonthlyTriggerJob>(
             recurringJobId: "monthly-trigger-job",
             methodCall: job => job.TriggerAsync(),
-            cronExpression: "0 10 * * *",
+            cronExpression: "*/1 * * * * *",
             options: new RecurringJobOptions
             {
                 TimeZone = TimeZoneInfo.Utc,
